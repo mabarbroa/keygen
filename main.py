@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Private Key Generator - Simple Python Version with Safe Logging
+Private Key Generator - Simple Python Version with Bulk Generation
 Author: Your Name
 """
 
@@ -9,6 +9,7 @@ from datetime import datetime
 from generators.rsa_generator import generate_rsa_key
 from generators.random_generator import generate_random_key
 from generators.crypto_generator import generate_bitcoin_key, generate_ethereum_key
+from generators.bulk_generator import BulkKeyGenerator
 from utils.logger import KeyLogger
 
 def main():
@@ -16,8 +17,9 @@ def main():
     print("🔐 PRIVATE KEY GENERATOR")
     print("=" * 50)
     
-    # Initialize logger
+    # Initialize logger dan bulk generator
     logger = KeyLogger()
+    bulk_gen = BulkKeyGenerator(logger)
     
     while True:
         print("\nPilih jenis private key:")
@@ -26,12 +28,13 @@ def main():
         print("3. Bitcoin Style Private Key")
         print("4. Ethereum Style Private Key")
         print("5. Generate Semua")
-        print("6. 📝 Lihat Log History")
-        print("7. 💾 Export Keys ke File")
-        print("8. 🗑️ Clear Log History")
+        print("6. 🔢 Bulk Generate (1-100 keys)")
+        print("7. 📝 Lihat Log History")
+        print("8. 💾 Export Keys ke File")
+        print("9. 🗑️ Clear Log History")
         print("0. Keluar")
         
-        choice = input("\nMasukkan pilihan (0-8): ").strip()
+        choice = input("\nMasukkan pilihan (0-9): ").strip()
         
         if choice == "1":
             print("\n🔑 Generating RSA Private Key...")
@@ -77,10 +80,13 @@ def main():
             logger.log_key_generation("Ethereum", ethereum_key)
             
         elif choice == "6":
+            bulk_gen.bulk_generation_menu()
+            
+        elif choice == "7":
             print("\n📝 Log History:")
             logger.show_log_history()
             
-        elif choice == "7":
+        elif choice == "8":
             print("\n💾 Export Options:")
             print("1. Export Log Only (Aman)")
             print("2. Export Keys (⚠️ BERBAHAYA!)")
@@ -95,7 +101,7 @@ def main():
                 else:
                     print("❌ Export dibatalkan")
             
-        elif choice == "8":
+        elif choice == "9":
             confirm = input("🗑️ Yakin ingin hapus semua log? (yes/no): ")
             if confirm.lower() == "yes":
                 logger.clear_logs()
