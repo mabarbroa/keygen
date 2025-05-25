@@ -3,12 +3,17 @@
 *.key
 private_keys/
 keys/
-generated_keys/
+generated_keys/*.txt
+generated_keys/*.json
+generated_keys/bulk_*
 DANGEROUS_*
 
 # Logs yang mungkin berisi private key
 logs/DANGEROUS_*
 logs/*keys*
+
+# Bulk generation results
+bulk_keys_*
 
 # Python
 __pycache__/
@@ -33,6 +38,7 @@ build/
 .DS_Store
 Thumbs.db
 
-# Logs aman boleh di-commit
-# logs/key_generation.log
-# logs/safe_export_*
+# Keep directories
+!generated_keys/.gitkeep
+!logs/.gitkeep
+
