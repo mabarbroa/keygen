@@ -1,0 +1,38 @@
+# Private keys - JANGAN COMMIT!
+*.pem
+*.key
+private_keys/
+keys/
+generated_keys/
+DANGEROUS_*
+
+# Logs yang mungkin berisi private key
+logs/DANGEROUS_*
+logs/*keys*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs aman boleh di-commit
+# logs/key_generation.log
+# logs/safe_export_*
