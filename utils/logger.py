@@ -143,3 +143,45 @@ class KeyLogger:
             
         except Exception as e:
             print(f"❌ Error clearing logs: {e}")
+
+    def log_bulk_generation(self, key_type: str, count: int, duration: float):
+        """Log bulk generation summary"""
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        log_entry = {
+            "timestamp": timestamp,
+            "type": f"BULK_{key_type}",
+            "count": count,
+            "duration_seconds": round(duration, 2),
+            "rate_per_second": round(count/duration, 1),
+            "session_id": id(self)
+        }
+        
+        self._write_safe_log(log_entry)
+
+    def get_bulk_statistics(self):
+        """Dapatkan statistik bulk generation"""
+        try:
+            if not os.path.exists(self.log_file):
+                return None
+                
+            with open(self.log_file, 'r') as f:
+                logs = json.load(f)
+            
+            bulk_logs = [log for log in logs if log['type'].startswith('BULK_')]
+            
+            if not bulk_logs:
+                return None
+            
+            total_keys = sum(log['count'] for log in bulk_logs)
+            total_sessions = len(bulk_logs)
+            
+            return {
+                "total_bulk_sessions": total_sessions,
+                "total_keys_generated": total_keys,
+                "last_bulk": bulk_logs[-1] if bulk_logs else None
+            }
+            
+        except Exception as e:
+            print(f"❌ Error getting bulk statistics: {e}")
+            return None
